@@ -11,7 +11,7 @@ class TodoViewSet(APIView):
     serializer_class = TodoSerializer
     
     """
-    GET /user/{user_id}
+    GET /todo/{id} or /todo
     """
     def get(self, request, **kwargs):
         if kwargs.get('id') is None:
@@ -28,7 +28,7 @@ class TodoViewSet(APIView):
             return Response(todo_serializer.data, status=status.HTTP_200_OK)
     
     """
-    POST /user/{user_id}
+    POST /todo
     """
     def post(self, request, **kwargs):
         if kwargs.get('id') is not None:
@@ -42,7 +42,7 @@ class TodoViewSet(APIView):
                 return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
             
     """
-    PUT /user/{user_id}
+    PUT /todo/{id}
     """
     def put(self, request, **kwargs):
         if kwargs.get('id') is None:
