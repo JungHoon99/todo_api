@@ -9,7 +9,6 @@ from .models import User
 from .validators import password_validate
 
 # Create your views here.
-
 class UserViewSet(APIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -25,7 +24,7 @@ class UserViewSet(APIView):
                 return Response("Don't have Id", status=status.HTTP_400_BAD_REQUEST)
             user_serializer = UserSerializer(todo_object)
             return Response(user_serializer.data, status=status.HTTP_200_OK)
-        
+
     """
     POST /todo
     """
