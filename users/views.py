@@ -56,7 +56,7 @@ class UserViewSet(APIView):
             return Response(user_serializer.data, status=status.HTTP_200_OK)
 
     """
-    POST /todo
+    POST /user
     """
     def post(self, request, **kwargs):
         #접근 url 제어
@@ -83,6 +83,6 @@ class UserViewSet(APIView):
         user_serializer = UserSerializer(data = data)
         if(user_serializer.is_valid()):
             user_serializer.save()
-            return Response(user_serializer.data, status=status.HTTP_200_OK)
+            return Response(user_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)

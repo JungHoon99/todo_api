@@ -22,6 +22,6 @@ from users.views import UserViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('todo/', include('todos.urls')),
-    path('user/', include('users.urls')),
+    path('todos/', include('todos.urls')),
+    path('users/', include('users.urls')),
 ]

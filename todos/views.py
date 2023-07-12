@@ -37,7 +37,7 @@ class TodoViewSet(APIView):
             todo_serializer = TodoSerializer(data = request.data)
             if(todo_serializer.is_valid()):
                 todo_serializer.save()
-                return Response(todo_serializer.data, status=status.HTTP_200_OK)
+                return Response(todo_serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
             
@@ -54,6 +54,6 @@ class TodoViewSet(APIView):
             update_todo_serializer = TodoSerializer(todo_object, data = request.data)
             if update_todo_serializer.is_valid():
                 update_todo_serializer.save()
-                return Response(update_todo_serializer.data, status=status.HTTP_200_OK)
+                return Response(update_todo_serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
