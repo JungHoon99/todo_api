@@ -3,12 +3,42 @@ from rest_framework.response import Response
 from rest_framework import status
 
 import bcrypt
+import jwt
+from todo_api.settings import SECRET_KEY
 
 from .serializers import UserSerializer
 from .models import User
 from .validators import password_validate
 
-# Create your views here.
+# Login view
+# /user/login
+class UserLoginViewSet(APIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
+    def post(self, request, **kwargs):
+        if('email' not in request.data or 'pw' not in request.data):
+            return Response("Not correct request data", status=status.HTTP_400_BAD_REQUEST)
+        if not User.objects.filter(email = request.data['email']).exists():
+            return Response("wrong email try again", status=status.HTTP_400_BAD_REQUEST)
+        
+        user_object = User.objects.get(email = request.data['email'])
+        
+        pw_encode = request.data['pw'].encode('utf-8')
+        
+        if not bcrypt.checkpw(pw_encode, user_object.pw.encode('utf-8')):
+            return Response("wrong password try again", status=status.HTTP_400_BAD_REQUEST)
+        
+        data = jwt.encode({'user_id' : user_object.id, 
+                    'user_email' : user_object.email}, SECRET_KEY, algorithm='HS256')
+        
+        return Response(data, status=status.HTTP_200_OK)
+        
+        
+        
+        
+# user basic view
+# /user or /user/<int:id>
 class UserViewSet(APIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -17,12 +47,12 @@ class UserViewSet(APIView):
         if kwargs.get('id') is None:
             return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
         else:
-            todo_id = kwargs.get('id')
+            user_id = kwargs.get('id')
             try:
-                todo_object = User.objects.get(id = todo_id)
+                user_object = User.objects.get(id = user_id)
             except User.DoesNotExist:
                 return Response("Don't have Id", status=status.HTTP_400_BAD_REQUEST)
-            user_serializer = UserSerializer(todo_object)
+            user_serializer = UserSerializer(user_object)
             return Response(user_serializer.data, status=status.HTTP_200_OK)
 
     """
