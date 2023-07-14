@@ -33,10 +33,8 @@ class UserLoginViewSet(APIView):
                     'user_email' : user_object.email}, SECRET_KEY, algorithm='HS256')
         
         return Response(data, status=status.HTTP_200_OK)
-        
-        
-        
-        
+
+
 # user basic view
 # /user or /user/<int:id>
 class UserViewSet(APIView):
