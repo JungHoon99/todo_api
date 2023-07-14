@@ -18,6 +18,22 @@ class UserLoginViewSet(APIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
+    def get(self, request, **kwargs):
+        if('HTTP_AUTHORIZATION' not in requests.META):
+            return Response("please append header your auth key", status=status.HTTP_500_BAD_REQUEST)
+        
+        auth = requests.META.get('HTTP_AUTHORIZATION')
+        
+        if(tokenEffectCheck(auth)):
+            return Response("wrong token", status=status.HTTP_500_BAD_REQUEST)
+        
+        is_black  = cache.get(auth)
+        
+        if is_black is not None:
+            return Response("ban token please login again", status=status.HTTP_200_OK)
+        
+        return Response("wrong token", status=status.HTTP_500_BAD_REQUEST)
+            
     def post(self, request, **kwargs):
         if('email' not in request.data or 'pw' not in request.data):
             return Response("Not correct request data", status=status.HTTP_400_BAD_REQUEST)
