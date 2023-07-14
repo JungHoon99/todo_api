@@ -1,12 +1,20 @@
 # TODO_API
-## 소개
+## 기능 소개
 - REST API를 활용한 Todo List를 관리할 수 있는 어플리케이션
 - Django의 DRF를 활용하여 구축하였습니다.
+- 회원이 로그인을 한다면 jwt를 발행하였습니다.
+- 회원이 로그아웃을 한다면 in-memory 데이터베이스인 redis에 추가하여 토큰으로 접속을 시도한다면 접속실패 오류를 던져줍니다.
+
 ### Python Package List
-    bcrypt==4.0.1
-    Django==4.2.3
-    djangorestframework==3.14.0
-    PyJWT==2.7.0
+    bcrypt              4.0.1
+    Django              4.2.3
+    django-redis        5.3.0
+    djangorestframework 3.14.0
+    PyJWT               2.7.0
+    redis               4.6.0
+
+### 환경
+- docker-compose를 사용하여 redis 시스템을 구축했습니다.
 
 ### 현재 API 목록
 - `todos/`
@@ -20,7 +28,9 @@
 - `users/<int:id>`
     - `GET` : id를 입력받아 user에 대한 정보 가져오기
 - `users/auth`
-    - `POST`
+    - `GET` : 해더에 token을 Authorization으로 전송한다면 유효한 토큰인지 검사
+    - `POST` : user의 id와 비밀번호를 json data로 요청을 한다면 jwt를 전송
+    - `DELETE` : 해더에 token을 Authorization으로 전송한다면 redis 밴 목록에 추가
 
 ----
 ### 고민 했던 부분들
