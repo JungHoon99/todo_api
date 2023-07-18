@@ -23,10 +23,11 @@ from django.conf.urls.static import static
 
 from todos.views import TodoViewSet
 from users.views import UserViewSet
-
+from photos.views import PhotoViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('todos/', include('todos.urls')),
     path('users/', include('users.urls')),
+    path('photos/', PhotoViewSet.as_view()),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
