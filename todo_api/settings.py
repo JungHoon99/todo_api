@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'users.apps.UsersConfig',
     'todos.apps.TodosConfig',
+    'photos.apps.PhotosConfig',
 ]
 
 MIDDLEWARE = [
