@@ -31,6 +31,11 @@
     - `GET` : 해더에 token을 Authorization으로 전송한다면 유효한 토큰인지 검사
     - `POST` : user의 id와 비밀번호를 json data로 요청을 한다면 jwt를 전송
     - `DELETE` : 해더에 token을 Authorization으로 전송한다면 redis 밴 목록에 추가
+- `photos`
+    - `GET` : 포토테이블에 전체 목록을 불러옵니다.
+    - `POST` : 이미지를 업로드
+- `media/image/<str:file_name>`
+    -`GET` : 이미지를 보여줌
 
 ----
 ### 고민 했던 부분들
